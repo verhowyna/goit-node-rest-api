@@ -30,7 +30,7 @@ mongoose
   .then(() => {
     app.listen(PORT, () => {
       console.log(
-        "Server is running. Use our API on port: 3000. Database connection successful"
+        `Server is running. Use our API on port: ${PORT}. Database connection successful`
       );
     });
   })
