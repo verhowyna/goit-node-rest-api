@@ -74,10 +74,28 @@ const updateContact = async (req, res, next) => {
   }
 };
 
+const updateFavorite = async (req, res, next) => {
+ try {
+   const { error } = updateContactSchema.validate(req.body);
+   if (error) {
+     throw HttpError(400, error.message);
+   }
+   const { id } = req.params;
+   const result = await contactsServices.updateStatusContact(id, req.body);
+   if (!result) {
+     throw HttpError(404, "Not found");
+   }
+   res.json(result);
+ } catch (error) {
+   next(error);
+ }
+};
+
 export default {
   getAllContacts,
   getOneContact,
   createContact,
   updateContact,
   deleteContact,
+  updateFavorite,
 };

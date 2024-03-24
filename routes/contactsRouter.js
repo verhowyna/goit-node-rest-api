@@ -16,4 +16,6 @@ contactsRouter.post("/", contactsControllers.createContact);
 
 contactsRouter.put("/:id", isValidId, contactsControllers.updateContact);
 
+contactsRouter.patch("/:id/favorite", isValidId, contactsControllers.updateFavorite)
+
 export default contactsRouter;
