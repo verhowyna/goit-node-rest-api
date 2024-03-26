@@ -5,6 +5,7 @@ import HttpError from "../helpers/HttpError.js";
 import {
   createContactSchema,
   updateContactSchema,
+  updateFavoriteSchema,
 } from "../schemas/contactsSchemas.js";
 
 const getAllContacts = async (req, res, next) => {
@@ -75,20 +76,20 @@ const updateContact = async (req, res, next) => {
 };
 
 const updateFavorite = async (req, res, next) => {
- try {
-   const { error } = updateContactSchema.validate(req.body);
-   if (error) {
-     throw HttpError(400, error.message);
-   }
-   const { id } = req.params;
-   const result = await contactsServices.updateStatusContact(id, req.body);
-   if (!result) {
-     throw HttpError(404, "Not found");
-   }
-   res.json(result);
- } catch (error) {
-   next(error);
- }
+  try {
+    const { error } = updateFavoriteSchema.validate(req.body);
+    if (error) {
+      throw HttpError(400, "Valid favorite is required");
+    }
+    const { id } = req.params;
+    const result = await contactsServices.updateStatusContact(id, req.body);
+    if (!result) {
+      throw HttpError(404, "Not found");
+    }
+    res.json(result);
+  } catch (error) {
+    next(error);
+  }
 };
 
 export default {
