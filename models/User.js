@@ -20,6 +20,10 @@ const userSchema = new Schema({
     enum: subscriptionList,
     default: "starter",
   },
+  owner: {
+    type: Schema.Types.ObjectId,
+    ref: "user",
+  },
 });
 
 userSchema.post("save", handleSaveError);

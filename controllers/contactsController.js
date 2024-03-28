@@ -9,8 +9,9 @@ import {
 } from "../schemas/contactsSchemas.js";
 
 const getAllContacts = async (req, res, next) => {
+  const { _id: owner } = req.user;
   try {
-    const result = await contactsServices.listContacts();
+    const result = await contactsServices.listContacts({ owner });
     res.json(result);
   } catch (error) {
     next(error);
@@ -46,12 +47,13 @@ const deleteContact = async (req, res, next) => {
 };
 
 const createContact = async (req, res, next) => {
+  const { _id: owner } = req.user;
   try {
     const { error } = createContactSchema.validate(req.body);
     if (error) {
       throw HttpError(400, error.message);
     }
-    const result = await contactsServices.addContact(req.body);
+    const result = await contactsServices.addContact({ ...req.body, owner });
     res.status(201).json(result);
   } catch (error) {
     next(error);
