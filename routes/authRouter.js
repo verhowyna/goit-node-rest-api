@@ -6,6 +6,8 @@ import validateBody from "../helpers/validateBody.js";
 
 import { userSignupSchema, userSigninSchema } from "../schemas/usersSchemas.js";
 
+import authenticate from "../middlewares/authenticate.js";
+
 const authRouter = express.Router();
 
 authRouter.post(
@@ -19,5 +21,9 @@ authRouter.post(
   validateBody(userSigninSchema),
   authController.signin
 );
+
+authRouter.get("/current", authenticate, authController.getCurrent);
+
+authRouter.post("/signout", authenticate, authController.signout);
 
 export default authRouter;

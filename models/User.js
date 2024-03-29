@@ -24,6 +24,10 @@ const userSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "user",
   },
+  token: {
+    type: String,
+    default: null,
+  },
 });
 
 userSchema.post("save", handleSaveError);
