@@ -24,14 +24,14 @@ const signin = async (req, res) => {
   const { email, password } = req.body;
   const user = await authServices.findUser({ email });
   if (!user) {
-    throw HttpError(401, "Email or password valid");
+    throw HttpError(401, "Email or password is wrong");
   }
   const comparePassword = authServices.validatePassword(
     password,
     user.password
   );
   if (!comparePassword) {
-    throw HttpError(401, "Email or password valid");
+    throw HttpError(401, "Email or password is wrong");
   }
   const { _id: id } = user;
 
