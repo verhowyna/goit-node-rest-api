@@ -9,7 +9,7 @@ const { JWT_SECRET } = process.env;
 const signup = async (req, res) => {
   const { email } = req.body;
   const user = await authServices.findUser({ email });
-  if (user) {
+  if (!user) {
     throw HttpError(409, "Email is use");
   }
   const newUser = await authServices.signup(req.body);
@@ -33,6 +33,7 @@ const signin = async (req, res) => {
   if (!comparePassword) {
     throw HttpError(401, "Email or password is wrong");
   }
+
   const { _id: id } = user;
 
   const payload = {
@@ -44,6 +45,10 @@ const signin = async (req, res) => {
 
   res.json({
     token,
+    user: {
+      email,
+      subscription: user.subscription,
+    },
   });
 };
 
