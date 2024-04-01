@@ -4,7 +4,7 @@ const validateBody = (schema) => {
   const func = (req, _, next) => {
     const { error } = schema.validate(req.body);
     if (error) {
-      return next(HttpError(400, error.mesage));
+      return next(HttpError(400, "Email or password is not valid"));
     }
     next();
   };
