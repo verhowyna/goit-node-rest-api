@@ -18,7 +18,7 @@ import User from "../models/User.js";
 
 const { JWT_SECRET } = process.env;
 
-const avatarsPath = path.resolve("");
+const avatarsPath = path.resolve("public", "avatars");
 
 const signup = async (req, res) => {
   const { email } = req.body;
@@ -96,7 +96,11 @@ const signout = async (req, res) => {
 const updateAvatar = async (req, res) => {
   const { _id: owner } = req.user;
 
+  if (!req.file) {
+    throw HttpError(400, "Please, upload the avatar");
+  }
   const { path: oldPath, originalname } = req.file;
+
   const filename = `${owner}_${originalname}`;
   const newPath = path.resolve(avatarsPath, filename);
 
