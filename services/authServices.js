@@ -6,7 +6,7 @@ export const findUser = (filter) => User.findOne(filter);
 
 export const signup = async (data) => {
   const hashPassword = await bcrypt.hash(data.password, 10);
-  return User.create({ ...data, password: hashPassword });
+  return User.create({ ...data, password: hashPassword, avatarUrl });
 };
 
 export const validatePassword = (password, hashPassword) =>
